@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.example.customview.R
 import com.nineoldandroids.view.ViewHelper
 import java.util.*
@@ -15,6 +16,11 @@ class CustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     private var mLastX : Int = 0
     private var mLastY : Int = 0
     private val longPress = 300
+
+    private val mWidth = 220*2
+    private val mHeight = 220*2
+
+    private var radius = 200f
 
     //判断是否可以出发长按和点击事件
     private var isClick = true
@@ -61,13 +67,37 @@ class CustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
         shader = bitmapShader
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val widthSpecMode = MeasureSpec.getMode(widthMeasureSpec)
+        val widthSpecSize = MeasureSpec.getSize(widthMeasureSpec)
+        val heightSpecMode = MeasureSpec.getMode(heightMeasureSpec)
+        val heightSpecSize = MeasureSpec.getSize(heightMeasureSpec)
+        //宽高都为wrap时设置view的大小为默认值
+        if (widthSpecMode == MeasureSpec.AT_MOST && heightSpecMode == MeasureSpec.AT_MOST){
+            setMeasuredDimension(mWidth,mHeight)
+        }else if (widthSpecMode == MeasureSpec.AT_MOST){
+            setMeasuredDimension(mWidth,heightSpecSize)
+        }else if(heightSpecMode == MeasureSpec.AT_MOST){
+            setMeasuredDimension(widthSpecSize,mHeight)
+        }
+    }
+
     override fun onDraw(canvas: Canvas?) {
 //        super.onDraw(canvas)
 //        canvas?.drawCircle(550f,600f,500f,linearPaint)
 //        canvas?.drawCircle(550f,600f,500f,radialPaint)
-        canvas?.drawCircle(260f,260f,200f,bitmapPaint)
+        canvas?.drawCircle((mWidth/2).toFloat(),(mHeight/2).toFloat(),radius,bitmapPaint)
     }
 
+
+    override fun performClick(): Boolean {
+        return super.performClick()
+    }
+
+    override fun performLongClick(): Boolean {
+        return super.performLongClick()
+    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val x = event!!.rawX.toInt()
@@ -89,6 +119,7 @@ class CustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
                 val translationY = ViewHelper.getTranslationY(this).toInt() + deltaY
                 ViewHelper.setTranslationX(this, translationX.toFloat())
                 ViewHelper.setTranslationY(this, translationY.toFloat())
+
             }
             MotionEvent.ACTION_UP ->{
                 if (event.pointerCount == 1){

@@ -1,7 +1,10 @@
 package com.example.customview
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -13,7 +16,6 @@ class MainActivity : AppCompatActivity() {
 
         batman_image.isClickable = true
 
-        //没有拦截点击事件，无法触发逻辑
         batman_image.setOnClickListener {
             Toast.makeText(this,"蝙蝠侠",Toast.LENGTH_SHORT).show()
         }
@@ -23,4 +25,5 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
 }

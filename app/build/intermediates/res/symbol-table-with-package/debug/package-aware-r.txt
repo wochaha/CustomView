@@ -676,7 +676,6 @@ id all
 id always
 id async
 id barrier
-id batman_button
 id batman_image
 id beginning
 id blocking

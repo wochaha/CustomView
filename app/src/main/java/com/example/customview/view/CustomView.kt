@@ -6,13 +6,12 @@ import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.ImageView
 import com.example.customview.R
 import com.nineoldandroids.view.ViewHelper
 import java.util.*
 
-class CustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+class CustomView(context: Context?, attrs: AttributeSet?) : ImageView(context, attrs) {
     private var mLastX : Int = 0
     private var mLastY : Int = 0
     private val longPress = 300
@@ -84,10 +83,17 @@ class CustomView(context: Context?, attrs: AttributeSet?) : View(context, attrs)
     }
 
     override fun onDraw(canvas: Canvas?) {
+        val paddingLeft = paddingLeft
+        val paddingRight = paddingRight
+        val paddingTop = paddingTop
+        val paddingBottom = paddingBottom
 //        super.onDraw(canvas)
 //        canvas?.drawCircle(550f,600f,500f,linearPaint)
 //        canvas?.drawCircle(550f,600f,500f,radialPaint)
-        canvas?.drawCircle((mWidth/2).toFloat(),(mHeight/2).toFloat(),radius,bitmapPaint)
+        //简单处理padding
+        val width = mWidth - paddingLeft - paddingRight
+        val height = mHeight - paddingBottom - paddingTop
+        canvas?.drawCircle((width/2).toFloat(),(height/2).toFloat(),radius,bitmapPaint)
     }
 
 

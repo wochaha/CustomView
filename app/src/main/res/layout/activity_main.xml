@@ -7,6 +7,9 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-    <com.example.customview.view.CustomView android:id="@+id/batman_image" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <com.example.customview.view.CustomView
+            android:id="@+id/batman_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
 </LinearLayout>
